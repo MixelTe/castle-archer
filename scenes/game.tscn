@@ -1,0 +1,119 @@
+[gd_scene format=3 uid="uid://d0p700rivkatn"]
+
+[ext_resource type="Script" uid="uid://cujyhsmuurur7" path="res://scenes/game.gd" id="1_gee14"]
+[ext_resource type="Texture2D" uid="uid://c8qov8wry30sy" path="res://assets/back.png" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://owe1813xab0a" path="res://sprites/enemy.tscn" id="2_0tnpc"]
+[ext_resource type="Texture2D" uid="uid://870qlph6bkac" path="res://assets/wall.png" id="2_yqjtg"]
+[ext_resource type="Texture2D" uid="uid://fkdek3v8j4km" path="res://assets/sprites.png" id="3_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://dqtb7jrhn33u7" path="res://sprites/arrow.tscn" id="4_iywne"]
+[ext_resource type="Script" uid="uid://kntt8ujs6uua" path="res://sprites/bow.gd" id="4_lbhrr"]
+[ext_resource type="Script" uid="uid://cttuc5560okhc" path="res://scenes/draw-path.gd" id="6_p57ef"]
+
+[sub_resource type="Curve2D" id="Curve2D_u5sy4"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 104, -360, 87.119995, -116.16001, -87.119995, 116.16001, 8, -96, 0, 0, 0, 0, -264, 136)
+}
+point_count = 3
+
+[node name="game" type="Node2D" unique_id=774211597 node_paths=PackedStringArray("enemies")]
+script = ExtResource("1_gee14")
+enemy_scene = ExtResource("2_0tnpc")
+enemies = NodePath("Enemies")
+
+[node name="Timer" type="Timer" parent="." unique_id=1265964839]
+one_shot = true
+
+[node name="Back" type="Sprite2D" parent="." unique_id=2000255003]
+z_index = -1
+position = Vector2(1.9073486e-06, -4.7683716e-07)
+scale = Vector2(0.9027778, 0.9027778)
+texture = ExtResource("1_uwrxv")
+
+[node name="Wall" type="Sprite2D" parent="." unique_id=2034505135]
+z_index = 47
+position = Vector2(-3.8146973e-06, 0)
+scale = Vector2(0.90555555, 0.9055555)
+texture = ExtResource("2_yqjtg")
+
+[node name="Wall2" type="Sprite2D" parent="." unique_id=683632288]
+z_index = 100
+position = Vector2(-150, 245)
+scale = Vector2(0.90555555, 0.9055555)
+texture = ExtResource("2_yqjtg")
+region_enabled = true
+region_rect = Rect2(0, 538, 948, 182)
+
+[node name="Wall3" type="Sprite2D" parent="." unique_id=2134993554]
+z_index = 100
+position = Vector2(-437, 0)
+scale = Vector2(0.90555555, 0.9055555)
+texture = ExtResource("2_yqjtg")
+region_enabled = true
+region_rect = Rect2(0, 0, 314, 720)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=513088031]
+
+[node name="Bow" type="Node2D" parent="." unique_id=413010212 node_paths=PackedStringArray("arrows")]
+z_index = 100
+position = Vector2(544, 272)
+script = ExtResource("4_lbhrr")
+arrow_scene = ExtResource("4_iywne")
+arrows = NodePath("../Arrows")
+
+[node name="String" type="Path2D" parent="Bow" unique_id=1295366485]
+position = Vector2(6.782593, -29.032257)
+scale = Vector2(0.9347826, 0.91935486)
+curve = SubResource("Curve2D_u5sy4")
+
+[node name="Line2D" type="Line2D" parent="Bow/String" unique_id=1559093896]
+script = ExtResource("6_p57ef")
+
+[node name="Image" type="Node2D" parent="Bow" unique_id=1501430008]
+position = Vector2(-96, -152)
+rotation = 0.6981317
+
+[node name="Sprite2D" type="Sprite2D" parent="Bow/Image" unique_id=1656716978]
+rotation = -0.6981317
+texture = ExtResource("3_lnu2h")
+region_enabled = true
+region_rect = Rect2(700, 70, 462, 583)
+
+[node name="ArrowHolder" type="Node2D" parent="Bow" unique_id=1403183749]
+position = Vector2(-372, -329)
+
+[node name="Timer" type="Timer" parent="Bow" unique_id=1521150566]
+wait_time = 0.5
+one_shot = true
+
+[node name="Arrows" type="Node2D" parent="." unique_id=2103535278]
+
+[node name="Enemies" type="Node2D" parent="." unique_id=1967453290]
+
+[node name="Sprites" type="Sprite2D" parent="." unique_id=752315576]
+z_index = 110
+position = Vector2(-530, 267)
+scale = Vector2(0.31776783, 0.31776783)
+texture = ExtResource("3_lnu2h")
+region_enabled = true
+region_rect = Rect2(37, 374, 234, 308)
+
+[node name="Label" type="Label" parent="." unique_id=969458560]
+z_index = 110
+offset_left = -473.0
+offset_top = 235.0
+offset_right = -372.0
+offset_bottom = 326.0
+theme_override_font_sizes/font_size = 66
+text = "0/0"
+
+[node name="Sprites2" type="Sprite2D" parent="." unique_id=2007036949]
+z_index = 110
+position = Vector2(-317.00003, 276)
+rotation = -1.3817917
+scale = Vector2(0.31776783, 0.31776783)
+texture = ExtResource("3_lnu2h")
+region_enabled = true
+region_rect = Rect2(265, 144, 324, 176)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Bow/Timer" to="Bow" method="_on_timer_timeout"]

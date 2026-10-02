@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://dqtb7jrhn33u7"]
+
+[ext_resource type="Script" uid="uid://bhum1w3fppfr5" path="res://sprites/arrow.gd" id="1_dhv28"]
+[ext_resource type="Texture2D" uid="uid://fkdek3v8j4km" path="res://assets/sprites.png" id="2_s1srl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pvcar"]
+
+[sub_resource type="Animation" id="Animation_dhv28"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale_mod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_s1srl"]
+resource_name = "vanish"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale_mod")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(2.378415, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fr6hy"]
+_data = {
+&"RESET": SubResource("Animation_dhv28"),
+&"vanish": SubResource("Animation_s1srl")
+}
+
+[node name="Arrow" type="StaticBody2D" unique_id=1136872009]
+z_index = 47
+script = ExtResource("1_dhv28")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1785106247]
+position = Vector2(32, -8)
+scale = Vector2(7.0043893, 7.0043893)
+shape = SubResource("CircleShape2D_pvcar")
+
+[node name="Sprites" type="Sprite2D" parent="." unique_id=155717090]
+position = Vector2(256, 1.9073486e-06)
+rotation = -0.3214215
+scale = Vector2(1.6527632, 1.6527632)
+texture = ExtResource("2_s1srl")
+region_enabled = true
+region_rect = Rect2(266, 159, 317, 154)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1011698293]
+libraries/ = SubResource("AnimationLibrary_fr6hy")
