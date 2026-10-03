@@ -12,6 +12,8 @@ var stringPoints = [];
 
 func _ready() -> void:
 	arrow = arrow_scene.instantiate();
+	arrow.global_position = $ArrowHolder.global_position
+	arrow.global_rotation = global_rotation + (30 * PI / 180)
 	arrows.add_child(arrow)
 	for i in 3:
 		stringPoints.append($String.curve.get_point_position(i))
@@ -44,8 +46,10 @@ func _input(event: InputEvent) -> void:
 		get_tree().quit()
 	if event.is_action_pressed("shoot"):
 		powering = true
+		$AudioPower.play()
 	if powering && event.is_action_released("shoot"):
 		powering = false
+		$AudioPower.stop()
 		var p = power
 		power = 0
 		$Image.scale = Vector2(1.0, 1.0)
@@ -55,6 +59,7 @@ func _input(event: InputEvent) -> void:
 			return
 		arrow.piu(get_global_mouse_position(), p)
 		arrow = null
+		$AudioFire.play()
 		$Timer.start()
 		
 

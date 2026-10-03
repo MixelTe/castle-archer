@@ -24,8 +24,11 @@ func _process(delta: float) -> void:
 	if alive:
 		z = max(0.4, z - SPEEDZ * delta)
 		if z <= 0.4:
+			alive = false
 			reached.emit()
-			queue_free()
+			$AudioYewyew.pitch_scale = randf_range(0.8, 1.2)
+			$AudioYewyew.play()
+			$AnimationPlayer.play("vanish")
 
 func draw():
 	z_index = 50 - clamp(z * 4, 4, 48)
@@ -41,4 +44,6 @@ func _on_body_entered(body: Node2D) -> void:
 		body.queue_free()
 		alive = false
 		killed.emit()
+		$AudioBew.pitch_scale = randf_range(0.8, 1.2)
+		$AudioBew.play()
 		$AnimationPlayer.play("vanish")

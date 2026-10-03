@@ -2,6 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://fkdek3v8j4km" path="res://assets/sprites.png" id="1_kshj0"]
 [ext_resource type="Script" uid="uid://cvb1tu4d51tij" path="res://sprites/enemy.gd" id="1_l4ii2"]
+[ext_resource type="AudioStream" uid="uid://dq26c5ta0qooc" path="res://assets/audio/bew.mp3" id="3_wbfcr"]
+[ext_resource type="AudioStream" uid="uid://bqp8h6m5jxnh7" path="res://assets/audio/yewyew.mp3" id="4_olgm6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l4ii2"]
 
@@ -110,5 +112,13 @@ shape = SubResource("RectangleShape2D_l4ii2")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1126662444]
 libraries/ = SubResource("AnimationLibrary_wbfcr")
 autoplay = &"move"
+
+[node name="AudioBew" type="AudioStreamPlayer" parent="." unique_id=1797048869]
+stream = ExtResource("3_wbfcr")
+volume_db = 5.0
+
+[node name="AudioYewyew" type="AudioStreamPlayer" parent="." unique_id=2145958766]
+stream = ExtResource("4_olgm6")
+volume_db = -8.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
